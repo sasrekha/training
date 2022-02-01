@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset"UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"content="width=device-width,initial-scale=1.0">
+    <title>books</title>
+</head>
+<body>
+    <h1><b></b></h1>
+    <h2>search here</h2>
+    <input type="text" name="a" id="a">
+    <button onclick="fn(document.getElementById('a').value)">search</button>
+    <div id="books"></div>
+    <script>
+        let displaybooks = (books) => {
+            let output '';
+            for(i=0;i<books.length;i++)
+                output += <h3>'${[i].title}</h3>;
+            }
+        fetch(`http://openlibrary.org/api/volumes/brief/isbn/9780525440987.json`)
+        .then(res => res.json())
+        .then(res => displaybooks(res));
+  }        
+        }
+        
+    </script>
+    <style>
+    </script>
+</body>
+</html>
