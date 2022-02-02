@@ -13,19 +13,47 @@
     <button onclick="fn(document.getElementById('a').value)">search</button>
     <div id="books"></div>
     <script>
+        
         let displaybooks = (books) => {
-            let output '';
+            let output = '';
             for(i=0;i<books.length;i++)
-                output += <h3>'${[i].title}</h3>;
+            {    
+                output += `<div class='book'><h3>${books[i].title}</h3>
+                    <p>${books[i].number_of_pages_median} pages</p>
+                    <p>by ${books[i].author_name} </p>
+                    <p>published at ${books[i].first_publish_year}</p>
+                    <p>${books[i].subject!=undefined?books[i].subject:''}</p>
+                    </div>`;
             }
-        fetch(`http://openlibrary.org/api/volumes/brief/isbn/9780525440987.json`)
-        .then(res => res.json())
-        .then(res => displaybooks(res));
-  }        
+            document.getElementById('books').innerHTML = output;
+            
         }
+        let fn = (query) => {
+            fetch(`http://openlibrary.org/search.json?q=${query}`)
+            .then(res => res.json())
+            .then(res => displaybooks(res.docs)); 
+        }
+        
+        
+        
         
     </script>
     <style>
-    </script>
+        body{
+            background-color: gray;
+        }
+        .book{
+            width:400px;
+            background-color: #fff;
+            border: 1px solid gray;
+            padding:16px;
+            margin:10px;
+            overflow: hidden;
+            box-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            display: inline-block;
+            vertical-align: top;    
+        }
+    </style>
 </body>
 </html>
