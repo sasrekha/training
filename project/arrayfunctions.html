@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset ="UTF-8">
+    <meta http-equiv="X-UA-Compatible"content="IE=edge">
+    <meta name="viewport"content="width=device-width,initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+<body>
+     <div id="news"></div>
+     <Script>
+         let clients = [
+             {Name:"rekha",email:"rekha@demo.com",mobile:"9658324624",
+             city:"kkd",doj:"26-01-2001",age;"21"},
+             {Name:"swapnika",email:"swap@demo.com",mobile:"7635324624",
+             city:"hyd",doj:"09-09-2002",age;"20"},
+             {Name:"vyas",email:"vyas@demo.com",mobile:"9658324577",
+             city:"rjy",doj:"22-07-2005",age;"24"},
+             {Name:"vishi",email:"vishi@demo.com",mobile:"9656474624",
+             city:"hyd",doj:"19-04-2000",age;"23"},
+         ]
+         clients.forEach(
+             (client) => console.log(${client.name} is {client.age} years old)
+         );
+         let filteredclients = clients.filter(client => client.age<30)
+         console.log(filteredclients);
+         clients.map((client) => client.name += ".")
+         console.log(clients)
+         let sorted clients  clients.sort((a,b)=> b.age - a.age)
+         console.log(sortedclients);
+         let totalAge = clients.reduce((total,client) => total + client.age,0)
+         ;
+         console.log('Total Age : ${totalAg}');
+     </Script>
+</body>
