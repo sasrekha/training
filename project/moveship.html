@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ships</title>
+	<link rel="icon" href="../favicon.gif">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	</head>
+	<body>
+	<!-- <img id="ship1" class="ship" src="../img/ship.gif"/>
+	<img id="ship2" class="ship" src="../img/ship.gif"/> -->
+	
+	<style>
+	body{
+	background-image: url('https://wallpapercave.com/wp/wp2088351.jpg');
+	}
+	.ship{
+	position:absolute;
+	left:10; top:10;
+	transition: left 1s;
+	}
+	#ship1{
+	filter:hue-rotate(30deg);
+	}
+	</style>
+	<script>
+	//event listeners
+	
+	let timer=null, pagewidth=$(document).width();
+	
+	function* generateDistance(){
+	while(1){
+	let distance = 10 + Math.floor(Math.random()*100)
+	yield distance;
+	}
+	}
+	
+	function changeShipPosition(ship){
+	return new Promise((resolve,reject)=>{
+	let x = parseInt(ship.offset().left);
+	let distance = generateDistance().next().value;
+	x += distance;
+	if(x<=(pagewidth-140))
+	resolve(x);
+	else
+	reject(x);
+	});
+	}
+	
+	let endrace = (ship) => {
+	clearInterval(timer);
+	let shipid = ship.attr('id');
+	$(".ship").hide();
+	$(ship).show();
+	alert(shipid+" won the race");
+	}
+	
+	let moveship = (ship) => {
+	changeShipPosition(ship)
+	.then((x)=> ship.css({left:x}))
+	.catch((x)=> endrace(ship));
+	}
+	
+	function makeships(n){
+	for(i=1;i<=n;i++){
+	let html = `<img id="ship${i}" style="top:${i*50}px; filter:hue-rotate(${i*30}deg); " class="ship" src="data:image/jpeg;base64,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"/>`;
+	$(document.body).append(html);
+	}
+	}
+	
+	
+	$(document).ready(() => {
+	
+	let numberShips = prompt("How many ships you want?","6");
+	makeships(numberShips);
+	
+	timer = setInterval(() => {
+	for(let i=1;i<=numberShips;i++)
+	{
+	let ship = $(`#ship${i}`)
+	moveship(ship);
+	}
+	},1000);
+	})
+	</script>
+	</body>
+	</html>
